@@ -9,6 +9,7 @@ import com.maids.cc.librarymanager.repository.entity.Patron;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
@@ -25,6 +26,7 @@ public class BorrowingRecordService {
         this.patronRepository = patronRepository;
     }
 
+    @Transactional
     public void borrowBook(Long bookId, Long patronId) {
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new ResourceNotFoundException("Book not found"));
         if (book.getQuantity() <= 0){
@@ -46,6 +48,7 @@ public class BorrowingRecordService {
         bookRepository.save(book);
     }
 
+    @Transactional
     public void returnBook(Long bookId, Long patronId) {
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new ResourceNotFoundException("Book not found"));
         Patron patron = patronRepository.findById(patronId).orElseThrow(() -> new ResourceNotFoundException("Patron not found"));

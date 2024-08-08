@@ -6,6 +6,7 @@ import com.maids.cc.librarymanager.repository.BookRepository;
 import com.maids.cc.librarymanager.repository.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,12 +32,14 @@ public class BookService {
         return BookMapper.INSTANCE.bookToBookDTO(book);
     }
 
+    @Transactional
     public BookDTO createBook(BookDTO bookDTO) {
         Book book = BookMapper.INSTANCE.bookDTOToBook(bookDTO);
         Book createdBook = bookRepository.save(book);
         return BookMapper.INSTANCE.bookToBookDTO(createdBook);
     }
 
+    @Transactional
     public BookDTO updateBook(Long id, BookDTO bookDTO) {
         Book existingBook = bookRepository.findById(id).orElse(null);
         if (existingBook == null) {
@@ -55,6 +58,7 @@ public class BookService {
         return BookMapper.INSTANCE.bookToBookDTO(updatedBook);
     }
 
+    @Transactional
     public void deleteBook(Long id) {
         bookRepository.deleteById(id);
     }

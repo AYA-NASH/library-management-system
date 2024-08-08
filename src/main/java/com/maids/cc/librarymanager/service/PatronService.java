@@ -6,6 +6,7 @@ import com.maids.cc.librarymanager.repository.PatronRepository;
 import com.maids.cc.librarymanager.repository.entity.Patron;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,12 +32,14 @@ public class PatronService {
         return PatronMapper.INSTANCE.patronToPatronDTO(patron);
     }
 
+    @Transactional
     public PatronDTO createPatron(PatronDTO patronDTO) {
         Patron patron = PatronMapper.INSTANCE.patronDTOToPatron(patronDTO);
         patron = patronRepository.save(patron);
         return PatronMapper.INSTANCE.patronToPatronDTO(patron);
     }
 
+    @Transactional
     public PatronDTO updatePatron(Long id, PatronDTO patronDTO) {
         Patron existingPatron = patronRepository.findById(id).orElse(null);
         if (existingPatron == null) {
@@ -56,6 +59,7 @@ public class PatronService {
         return PatronMapper.INSTANCE.patronToPatronDTO(updatedPatron);
     }
 
+    @Transactional
     public void deletePatron(Long id) {
         patronRepository.deleteById(id);
     }
