@@ -33,6 +33,6 @@ public class Patron {
     private String address;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "patron", cascade = CascadeType.ALL)
-    private List<BorrowingRecord> borrowingRecords;
+    private List<BorrowingRecord> borrowingRecords = new ArrayList<>();
 
 }

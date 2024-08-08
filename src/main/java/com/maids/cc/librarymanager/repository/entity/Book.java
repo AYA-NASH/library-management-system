@@ -33,7 +33,7 @@ public class Book {
     private Integer quantity;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
-    private List<BorrowingRecord> borrowingRecords;
+    private List<BorrowingRecord> borrowingRecords = new ArrayList<>();
 
 
 //    private String category;
