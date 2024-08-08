@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -28,6 +31,9 @@ public class Book {
 
     @Column(name = "quantity")
     private Integer quantity;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
+    private List<BorrowingRecord> borrowingRecords;
 
 
 //    private String category;

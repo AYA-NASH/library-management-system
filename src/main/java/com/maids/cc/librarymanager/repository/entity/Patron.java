@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "patrons")
 @Setter
@@ -28,4 +31,8 @@ public class Patron {
 
     @Column(name = "address")
     private String address;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "patron", cascade = CascadeType.ALL)
+    private List<BorrowingRecord> borrowingRecords;
+
 }
