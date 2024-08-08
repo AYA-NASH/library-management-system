@@ -63,14 +63,14 @@ Base URL: http://localhost:8080/api
 ## Completed Work
 - Configured MVC structure for managing application logic.
 - Set up database with Postgresql
-- Implemented CRUD operations for Book, Patron, and Borrowing Reecords entities, and manage the reelationship between them.
+- Implemented CRUD operations for Book, Patron, and Borrowing Reecords entities, and manage the relationship between them.
 - Validated input for API requests.
 - Transaction Management.
 - Developed unit tests for Service Layer.
 
 ## Next Steps
-- Complete unit tests for Controller, and Reppository Layers
+- Complete unit tests for Controller, and Repository Layers
 - Implement security features for authentication and authorization.
 - Add logging and monitoring for the application.
-- Explore caching mechanisms for improved performance.
-- Implement additional features such as borrowing records
+- Add caching mechanism for improved performance.
+
