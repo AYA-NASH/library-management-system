@@ -34,9 +34,4 @@ public class Book {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
     private List<BorrowingRecord> borrowingRecords = new ArrayList<>();
-
-
-//    private String category;
-//    private String publisher;
-//    private Date publicationYear;
 }

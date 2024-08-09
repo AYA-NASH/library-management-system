@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/api")
 public interface BorrowingRecordAPI {
     @PostMapping("/borrow/{bookId}/patron/{patronId}")
-    public ResponseEntity<Void> borrowBook(@PathVariable Long bookId, @PathVariable Long patronId);
+    ResponseEntity<Void> borrowBook(@PathVariable Long bookId, @PathVariable Long patronId);
 
     @PutMapping("/return/{bookId}/patron/{patronId}")
-    public ResponseEntity<Void> returnBook(@PathVariable Long bookId, @PathVariable Long patronId);
+    ResponseEntity<Void> returnBook(@PathVariable Long bookId, @PathVariable Long patronId);
 }

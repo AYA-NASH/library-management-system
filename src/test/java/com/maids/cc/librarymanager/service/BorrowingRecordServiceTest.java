@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
@@ -23,7 +24,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
-@RunWith(SpringRunner.class)
+@SpringBootTest
 public class BorrowingRecordServiceTest {
 
     @Mock
@@ -38,10 +39,7 @@ public class BorrowingRecordServiceTest {
     @InjectMocks
     private BorrowingRecordService borrowingRecordService;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
+
 
     @Test
     public void testBorrowBook() {

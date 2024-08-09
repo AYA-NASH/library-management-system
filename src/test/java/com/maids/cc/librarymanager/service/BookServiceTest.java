@@ -4,25 +4,23 @@ import com.maids.cc.librarymanager.controller.dto.BookDTO;
 import com.maids.cc.librarymanager.mappers.BookMapper;
 import com.maids.cc.librarymanager.repository.BookRepository;
 import com.maids.cc.librarymanager.repository.entity.Book;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
+@SpringBootTest
 public class BookServiceTest {
 
     @Mock
@@ -31,10 +29,6 @@ public class BookServiceTest {
     @InjectMocks
     private BookService bookService;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.initMocks(this); // Use initMocks for JUnit 4
-    }
 
     @Test
     public void testSetup() {
