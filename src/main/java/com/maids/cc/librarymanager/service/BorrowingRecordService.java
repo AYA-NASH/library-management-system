@@ -31,16 +31,17 @@ public class BorrowingRecordService {
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new ResourceNotFoundException("Book not found"));
         if (book.getQuantity() <= 0){
             throw new ResourceNotFoundException("Book is not available");
-//            throw new IllegalStateException("Book not available");
         }
 
         Patron patron = patronRepository.findById(patronId).orElseThrow(() -> new ResourceNotFoundException("Patron not found"));
 
-        BorrowingRecord newRecord = new BorrowingRecord();
-        newRecord.setBook(book);
-        newRecord.setPatron(patron);
-        newRecord.setBorrowDate(LocalDate.now());
-        newRecord.setStatus("BORROWED");
+
+        BorrowingRecord newRecord = BorrowingRecord.builder()
+                .book(book)
+                .patron(patron)
+                .borrowDate(LocalDate.now())
+                .status("BORROWED")
+                .build();
 
         borrowingRecordRepository.save(newRecord);
 

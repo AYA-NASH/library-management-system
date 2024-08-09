@@ -32,14 +32,12 @@ public class BookService {
         return BookMapper.INSTANCE.bookToBookDTO(book);
     }
 
-    @Transactional
     public BookDTO createBook(BookDTO bookDTO) {
         Book book = BookMapper.INSTANCE.bookDTOToBook(bookDTO);
         Book createdBook = bookRepository.save(book);
         return BookMapper.INSTANCE.bookToBookDTO(createdBook);
     }
 
-    @Transactional
     public BookDTO updateBook(Long id, BookDTO bookDTO) {
         Book existingBook = bookRepository.findById(id).orElse(null);
         if (existingBook == null) {
@@ -58,7 +56,7 @@ public class BookService {
         return BookMapper.INSTANCE.bookToBookDTO(updatedBook);
     }
 
-    @Transactional
+
     public void deleteBook(Long id) {
         bookRepository.deleteById(id);
     }

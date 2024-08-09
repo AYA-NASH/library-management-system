@@ -32,14 +32,12 @@ public class PatronService {
         return PatronMapper.INSTANCE.patronToPatronDTO(patron);
     }
 
-    @Transactional
     public PatronDTO createPatron(PatronDTO patronDTO) {
         Patron patron = PatronMapper.INSTANCE.patronDTOToPatron(patronDTO);
         patron = patronRepository.save(patron);
         return PatronMapper.INSTANCE.patronToPatronDTO(patron);
     }
 
-    @Transactional
     public PatronDTO updatePatron(Long id, PatronDTO patronDTO) {
         Patron existingPatron = patronRepository.findById(id).orElse(null);
         if (existingPatron == null) {
@@ -59,7 +57,6 @@ public class PatronService {
         return PatronMapper.INSTANCE.patronToPatronDTO(updatedPatron);
     }
 
-    @Transactional
     public void deletePatron(Long id) {
         patronRepository.deleteById(id);
     }
