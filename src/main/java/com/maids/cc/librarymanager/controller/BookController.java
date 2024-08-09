@@ -3,6 +3,7 @@ package com.maids.cc.librarymanager.controller;
 import com.maids.cc.librarymanager.controller.dto.BookDTO;
 import com.maids.cc.librarymanager.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +34,7 @@ public class BookController implements BookAPI{
     @Override
     public ResponseEntity<BookDTO> createBook(BookDTO bookDTO) {
         BookDTO createdBook = bookService.createBook(bookDTO);
-        return ResponseEntity.ok(createdBook);
+        return new ResponseEntity<>(createdBook, HttpStatus.CREATED);
     }
 
     @Override
@@ -45,7 +46,7 @@ public class BookController implements BookAPI{
     @Override
     public ResponseEntity<Void> deleteBook(Long id) {
         bookService.deleteBook(id);
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 

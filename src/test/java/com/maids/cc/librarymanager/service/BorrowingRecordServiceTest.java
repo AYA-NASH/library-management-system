@@ -13,12 +13,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -52,7 +54,37 @@ public class BorrowingRecordServiceTest {
 
         borrowingRecordService.borrowBook(1L, 1L);
 
+
         verify(borrowingRecordRepository, times(1)).save(any(BorrowingRecord.class));
+    }
+
+    @Test
+    public void testBorrowBookBookNotFound() {
+        when(bookRepository.findById(any(Long.class))).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> borrowingRecordService.borrowBook(1L, 1L));
+
+    }
+
+    @Test
+    public void testBorrowBookBookNotAvailable() {
+        Book book = new Book(1L, "Book1", "Author1", 1234567890L, 0, new ArrayList<>());
+
+        when(bookRepository.findById(any(Long.class))).thenReturn(Optional.of(book));
+
+        assertThrows(ResourceNotFoundException.class, () -> borrowingRecordService.borrowBook(1L, 1L));
+
+    }
+
+    @Test
+    public void testBorrowBookPatronNotFound() {
+        Book book = new Book(1L, "Book1", "Author1", 1234567890L, 10, new ArrayList<>());
+
+        when(bookRepository.findById(any(Long.class))).thenReturn(Optional.of(book));
+        when(patronRepository.findById(any(Long.class))).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> borrowingRecordService.borrowBook(1L, 1L));
+
     }
 
     @Test
@@ -68,5 +100,42 @@ public class BorrowingRecordServiceTest {
         borrowingRecordService.returnBook(1L, 1L);
 
         verify(borrowingRecordRepository, times(1)).save(any(BorrowingRecord.class));
+    }
+
+    @Test
+    public void testReturnBookBookNotFound() {
+        when(bookRepository.findById(any(Long.class))).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> borrowingRecordService.returnBook(1L, 1L));
+
+    }
+
+    @Test
+    public void testReturnBookPatronNotFound() {
+        Book book = new Book(1L, "Book1", "Author1", 1234567890L, 10, new ArrayList<>());
+        BorrowingRecord record = new BorrowingRecord(1L, book, null, LocalDate.now(), null, "BORROWED");
+
+        when(bookRepository.findById(any(Long.class))).thenReturn(Optional.of(book));
+        when(patronRepository.findById(any(Long.class))).thenReturn(Optional.empty());
+        when(borrowingRecordRepository.findByBookIdAndPatronIdAndStatus(any(Long.class), any(Long.class), anyString())).thenReturn(Optional.of(record));
+
+        assertThrows(ResourceNotFoundException.class, () -> borrowingRecordService.returnBook(1L, 1L));
+
+    }
+
+    @Test
+    public void testReturnBookNotBorrowed() {
+
+        Book book = new Book(1L, "Book1", "Author1", 1234567890L, 10, null);
+        Patron patron = new Patron(1L, "Patron1", "patron1@mail.com", "1234567890", "Address1", null);
+
+        when(bookRepository.findById(any(Long.class))).thenReturn(Optional.of(book));
+        when(patronRepository.findById(any(Long.class))).thenReturn(Optional.of(patron));
+        when(borrowingRecordRepository.findByBookIdAndPatronIdAndStatus(any(Long.class), any(Long.class), anyString())).thenReturn(Optional.empty());
+
+
+        assertThrows(RuntimeException.class, () -> {
+            borrowingRecordService.returnBook(1L, 1L);
+        });
     }
 }

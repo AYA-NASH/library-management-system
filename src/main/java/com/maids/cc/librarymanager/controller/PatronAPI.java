@@ -15,7 +15,7 @@ public interface PatronAPI {
     ResponseEntity<List<PatronDTO>> getAllPatrons();
 
     @GetMapping("/{id}")
-    ResponseEntity<PatronDTO> getPatronById(Long id);
+    ResponseEntity<PatronDTO> getPatronById(@PathVariable Long id);
 
     @PostMapping(path = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<PatronDTO> createPatron(@Valid @RequestBody PatronDTO patronDTO);

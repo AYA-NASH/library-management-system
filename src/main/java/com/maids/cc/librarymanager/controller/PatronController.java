@@ -3,6 +3,7 @@ package com.maids.cc.librarymanager.controller;
 import com.maids.cc.librarymanager.controller.dto.PatronDTO;
 import com.maids.cc.librarymanager.service.PatronService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,7 +33,7 @@ public class PatronController implements PatronAPI{
     @Override
     public ResponseEntity<PatronDTO> createPatron(PatronDTO patronDTO) {
         PatronDTO createdPatron = patronService.createPatron(patronDTO);
-        return ResponseEntity.ok(createdPatron);
+        return new ResponseEntity<>(createdPatron, HttpStatus.CREATED);
     }
 
     @Override
